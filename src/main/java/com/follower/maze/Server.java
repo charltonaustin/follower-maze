@@ -1,7 +1,4 @@
-package com.follower.maze.users;
-
-import com.follower.maze.MyServer;
-import com.follower.maze.Processor;
+package com.follower.maze;
 
 import java.io.IOException;
 import java.net.ServerSocket;

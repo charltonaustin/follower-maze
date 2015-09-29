@@ -1,14 +1,14 @@
 package com.follower.maze;
 
-import com.follower.maze.events.EventProcessor;
-import com.follower.maze.users.Server;
+import com.follower.maze.event.processor.IncomingEventProcessor;
 import com.follower.maze.users.User;
-import com.follower.maze.users.UserProcessor;
-import com.follower.maze.users.UserResponseServer;
+import com.follower.maze.users.accept.AcceptUserProcessor;
+import com.follower.maze.users.response.UserResponseProcessor;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -38,21 +38,21 @@ public class Main {
                 Executors.newCachedThreadPool(),
                 new ServerSocket(9090),
                 continueRunning,
-                new EventProcessor(continueRunning, users, null, null));
+                new IncomingEventProcessor(continueRunning, users, null));
 
         final Server newUserServer = new Server(
                 Executors.newCachedThreadPool(),
                 userSocketServer,
                 continueRunning,
-                new UserProcessor(users, continueRunning));
+                new AcceptUserProcessor(users, continueRunning));
 
         final Server userResponseServer = new Server(
                 Executors.newCachedThreadPool(),
                 userSocketServer,
                 continueRunning,
-                new EventProcessor(continueRunning, users, null, null));
+                new UserResponseProcessor(users, continueRunning, null));
 
-        final LinkedList<MyServer> servers = new LinkedList<MyServer>() {{
+        final List<MyServer> servers = new LinkedList<MyServer>() {{
             add(newUserServer);
             add(eventServer);
             add(userResponseServer);
