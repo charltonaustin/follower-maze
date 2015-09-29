@@ -9,20 +9,20 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class NewUserServer extends MyServer {
+public class Server extends MyServer {
     private final ExecutorService userThreadPool;
-    private final ServerSocket userSocketServer;
+    private final ServerSocket socket;
     private final AtomicBoolean continueRunning;
-    private final Processor userProcessor;
+    private final Processor processor;
 
-    public NewUserServer(ExecutorService userThreadPool,
-                         ServerSocket userSocketServer,
-                         AtomicBoolean continueRunning,
-                         Processor userProcessor) {
+    public Server(ExecutorService userThreadPool,
+                  ServerSocket socket,
+                  AtomicBoolean continueRunning,
+                  Processor processor) {
         this.userThreadPool = userThreadPool;
-        this.userSocketServer = userSocketServer;
+        this.socket = socket;
         this.continueRunning = continueRunning;
-        this.userProcessor = userProcessor;
+        this.processor = processor;
     }
 
     @Override
@@ -32,8 +32,8 @@ public class NewUserServer extends MyServer {
                 @Override
                 public void run() {
                     try {
-                        final Socket userSocket = userSocketServer.accept();
-                        userProcessor.process(userSocket);
+                        final Socket userSocket = socket.accept();
+                        processor.process(userSocket);
                         userSocket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -46,6 +46,6 @@ public class NewUserServer extends MyServer {
 
     public void shutDown() throws IOException {
         userThreadPool.shutdownNow();
-        userSocketServer.close();
+        socket.close();
     }
 }

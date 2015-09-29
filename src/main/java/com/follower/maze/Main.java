@@ -1,11 +1,10 @@
 package com.follower.maze;
 
 import com.follower.maze.events.EventProcessor;
-import com.follower.maze.events.EventServer;
-import com.follower.maze.users.NewUserServer;
+import com.follower.maze.users.Server;
 import com.follower.maze.users.User;
-import com.follower.maze.users.UserResponseServer;
 import com.follower.maze.users.UserProcessor;
+import com.follower.maze.users.UserResponseServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -34,13 +33,24 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
         final ServerSocket userSocketServer = new ServerSocket(9099);
-        final UserResponseServer userResponseServer = new UserResponseServer(userSocketServer);
-        final EventServer eventServer = new EventServer(new ServerSocket(9090), new EventProcessor(continueRunning, users, null, currentMessages));
-        final NewUserServer newUserServer = new NewUserServer(
+
+        final Server eventServer = new Server(
+                Executors.newCachedThreadPool(),
+                new ServerSocket(9090),
+                continueRunning,
+                new EventProcessor(continueRunning, users, null, null));
+
+        final Server newUserServer = new Server(
                 Executors.newCachedThreadPool(),
                 userSocketServer,
                 continueRunning,
                 new UserProcessor(users, continueRunning));
+
+        final Server userResponseServer = new Server(
+                Executors.newCachedThreadPool(),
+                userSocketServer,
+                continueRunning,
+                new EventProcessor(continueRunning, users, null, null));
 
         final LinkedList<MyServer> servers = new LinkedList<MyServer>() {{
             add(newUserServer);
