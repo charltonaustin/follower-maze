@@ -62,7 +62,7 @@ of events, **we expect your server to handle an arbitrarily large events stream*
 (i.e. you would not be able to keep all events in memory or any other storage)*
 
 Events may generate notifications for *user clients*. **If there is a
-*user client* ** connected for them, these are the users to be
+*user client* ** connected for them, these are the userSocketServer to be
 informed for different event types:
 
 * **Follow**: Only the `To User Id` should be notified
@@ -99,11 +99,11 @@ following environment variables:
 
 5. **concurrencyLevel** - Default: 100
 
-   Number of conected users.
+   Number of conected userSocketServer.
 
 6. **numberOfUsers** Default: concurrencyLevel * 10
 	
-   Total number of users (connected or not)
+   Total number of userSocketServer (connected or not)
 
 7. **randomSeed** - Default: 666
 	
