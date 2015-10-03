@@ -13,7 +13,7 @@ public class DispatchEventProcessor extends MyServer {
     private final AtomicBoolean continueRunning;
     private final PriorityBlockingQueue<Event> readyToProcessEvents;
     private final BlockingQueue<Event> dispatchEvents;
-    private int currentSequenceNumber = 100;
+    private int currentSequenceNumber = 1;
 
 
     public DispatchEventProcessor(
