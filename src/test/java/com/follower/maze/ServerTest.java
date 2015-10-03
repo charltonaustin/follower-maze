@@ -20,13 +20,13 @@ public class ServerTest {
     private final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private ServerSocketMock socketServerMock;
     private Server server;
-    private ProcessorMock processorMock = new ProcessorMock();
+    private ClientProcessorMock processorMock = new ClientProcessorMock();
 
 
     @Before
     public void setUp() throws Exception {
         socketServerMock = new ServerSocketMock();
-        server = new Server(Executors.newSingleThreadExecutor(), socketServerMock, continueRunning, processorMock);
+        server = new Server(continueRunning, Executors.newSingleThreadExecutor(), socketServerMock, processorMock);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ServerTest {
     public void testShutDown() throws Exception {
     }
 
-    private class ProcessorMock implements Processor {
+    private class ClientProcessorMock implements ClientProcessor {
 
 
         @Override

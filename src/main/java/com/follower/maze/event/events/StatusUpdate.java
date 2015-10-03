@@ -1,16 +1,63 @@
 package com.follower.maze.event.events;
 
-public class StatusUpdate implements Event {
+import com.follower.maze.users.User;
 
-    private final Integer sequenceNumber;
-    private final Integer fromUserId;
-    private final Integer toUserId;
+import java.io.IOException;
+import java.util.Map;
+
+public class StatusUpdate extends Event {
+
+    private final int sequenceNumber;
+    private final int fromUserId;
     private final String event;
 
-    public StatusUpdate(Integer sequenceNumber, String event, Integer fromUserId, Integer toUserId) {
+    public StatusUpdate(int sequenceNumber, String event, int fromUserId) {
         this.sequenceNumber = sequenceNumber;
         this.fromUserId = fromUserId;
-        this.toUserId = toUserId;
         this.event = event;
+    }
+
+    @Override
+    public Integer getSequenceNumber() {
+        return sequenceNumber;
+    }
+
+    @Override
+    public void notifyUsers(Map<Integer, User> users) throws IOException {
+        final User user = users.get(fromUserId);
+        if (user != null) {
+            user.notifyFollowers(event);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StatusUpdate that = (StatusUpdate) o;
+
+        if (fromUserId != that.fromUserId) return false;
+        if (sequenceNumber != that.sequenceNumber) return false;
+        if (event != null ? !event.equals(that.event) : that.event != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sequenceNumber;
+        result = 31 * result + fromUserId;
+        result = 31 * result + (event != null ? event.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "StatusUpdate{" +
+                "sequenceNumber=" + sequenceNumber +
+                ", fromUserId=" + fromUserId +
+                ", event='" + event + '\'' +
+                '}';
     }
 }

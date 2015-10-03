@@ -10,34 +10,39 @@ public class Server extends MyServer {
     private final ExecutorService userThreadPool;
     private final ServerSocket socket;
     private final AtomicBoolean continueRunning;
-    private final Processor processor;
+    private final ClientProcessor clientProcessor;
 
-    public Server(ExecutorService userThreadPool,
+    public Server(AtomicBoolean continueRunning, ExecutorService userThreadPool,
                   ServerSocket socket,
-                  AtomicBoolean continueRunning,
-                  Processor processor) {
+                  ClientProcessor clientProcessor) {
         this.userThreadPool = userThreadPool;
         this.socket = socket;
         this.continueRunning = continueRunning;
-        this.processor = processor;
+        this.clientProcessor = clientProcessor;
     }
 
     @Override
     public void run() {
         while (continueRunning.get()) {
-            userThreadPool.submit(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        final Socket userSocket = socket.accept();
-                        processor.process(userSocket);
-                        userSocket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+            final Socket userSocket;
+            try {
+                userSocket = socket.accept();
+                userThreadPool.submit(new Runnable() {
+                    @Override
+                    public void run() {
 
-            });
+                        try {
+                            clientProcessor.process(userSocket);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

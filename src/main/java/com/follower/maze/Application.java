@@ -11,9 +11,7 @@ public class Application {
     private final List<MyServer> runnables;
     private final AtomicBoolean continueRunning;
 
-    public Application(ExecutorService applicationThreads,
-                       List<MyServer> runnables,
-                       AtomicBoolean continueRunning) {
+    public Application(AtomicBoolean continueRunning, ExecutorService applicationThreads, List<MyServer> runnables) {
         this.serverThreadPool = applicationThreads;
         this.runnables = runnables;
         this.continueRunning = continueRunning;
@@ -26,8 +24,5 @@ public class Application {
         while (continueRunning.get()) {
             serverThreadPool.shutdownNow();
         }
-
     }
-
-
 }
