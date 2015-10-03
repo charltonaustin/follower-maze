@@ -2,7 +2,6 @@ package com.follower.maze.event.processor;
 
 import com.follower.maze.ClientProcessor;
 import com.follower.maze.event.events.Event;
-import com.follower.maze.event.events.EventTypes;
 import com.follower.maze.event.events.factory.EventFactory;
 
 import java.io.BufferedReader;
@@ -23,7 +22,7 @@ public class IncomingEventProcessor implements ClientProcessor {
 
     public IncomingEventProcessor(AtomicBoolean continueRunning,
                                   PriorityBlockingQueue<Event> readyToProcessEvents,
-                                  EventTypes eventTypes) {
+                                  Map<String, EventFactory> eventTypes) {
         this.continueRunning = continueRunning;
         this.readyToProcessEvents = readyToProcessEvents;
         this.eventTypes = eventTypes;

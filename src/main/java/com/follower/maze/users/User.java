@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Set;
 
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
 
     private final Integer userNumber;
     private final BufferedWriter bufferedWriter;

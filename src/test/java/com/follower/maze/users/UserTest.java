@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import static junit.framework.TestCase.assertFalse;

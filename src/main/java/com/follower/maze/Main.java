@@ -1,7 +1,6 @@
 package com.follower.maze;
 
 import com.follower.maze.event.events.Event;
-import com.follower.maze.event.events.EventTypes;
 import com.follower.maze.event.events.factory.BroadcastFactory;
 import com.follower.maze.event.events.factory.EventFactory;
 import com.follower.maze.event.events.factory.FollowFactory;
@@ -42,13 +41,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Runtime.getRuntime().addShutdownHook(shutdownHook);
 
-        final EventTypes eventTypes = new EventTypes(new ConcurrentHashMap<String, EventFactory>() {{
+        final ConcurrentHashMap<String, EventFactory> eventTypes = new ConcurrentHashMap<String, EventFactory>() {{
             put("F", new FollowFactory());
             put("U", new UnfollowFactory());
             put("B", new BroadcastFactory());
             put("P", new PrivateMessageFactory());
             put("S", new StatusUpdateFactory());
-        }});
+        }};
         final PriorityBlockingQueue<Event> readyToProcessEvents = new PriorityBlockingQueue<>();
         final PriorityBlockingQueue<Event> dispatchedEvents = new PriorityBlockingQueue<>();
         final ServerSocket userSocketServer = new ServerSocket(9099);

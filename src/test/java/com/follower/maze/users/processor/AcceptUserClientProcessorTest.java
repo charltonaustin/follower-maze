@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Map;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -22,7 +23,7 @@ public class IncomingEventProcessorTest {
     private final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private final PriorityBlockingQueue<Event> readyToProcessEvents = new PriorityBlockingQueue<>(100);
     private final EventFactory eventFactoryMock = mock(EventFactory.class);
-    private final EventTypes eventTypes = mock(EventTypes.class);
+    private final Map eventTypes = mock(Map.class);
     private final Socket socketMock = mock(Socket.class);
     private final Event eventMock = mock(Event.class);
     private final IncomingEventProcessor incomingEventProcessor = new IncomingEventProcessor(continueRunning, readyToProcessEvents, eventTypes);
