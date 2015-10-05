@@ -5,16 +5,16 @@ import com.follower.maze.event.events.Event;
 import com.follower.maze.users.User;
 
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UserResponseClientProcessor extends MyServer {
-    private final ConcurrentHashMap<Integer, User> users;
+    private final Map<Integer, User> users;
     private final AtomicBoolean continueRunning;
-    private final BlockingQueue<Event> dispatchedEvents;
+    private final Queue<Event> dispatchedEvents;
 
-    public UserResponseClientProcessor(AtomicBoolean continueRunning, ConcurrentHashMap<Integer, User> users, BlockingQueue<Event> dispatchedEvents) {
+    public UserResponseClientProcessor(AtomicBoolean continueRunning, Map<Integer, User> users, Queue<Event> dispatchedEvents) {
         this.users = users;
         this.continueRunning = continueRunning;
         this.dispatchedEvents = dispatchedEvents;

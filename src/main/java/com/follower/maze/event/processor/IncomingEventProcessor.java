@@ -9,19 +9,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Map;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class IncomingEventProcessor implements ClientProcessor {
 
-    private static final String DEFAULT_KEY = "Default Type Key";
 
     private final Map<String, EventFactory> eventTypes;
     private final AtomicBoolean continueRunning;
-    private final PriorityBlockingQueue<Event> readyToProcessEvents;
+    private final Queue<Event> readyToProcessEvents;
 
     public IncomingEventProcessor(AtomicBoolean continueRunning,
-                                  PriorityBlockingQueue<Event> readyToProcessEvents,
+                                  Queue<Event> readyToProcessEvents,
                                   Map<String, EventFactory> eventTypes) {
         this.continueRunning = continueRunning;
         this.readyToProcessEvents = readyToProcessEvents;
@@ -33,10 +32,10 @@ public class IncomingEventProcessor implements ClientProcessor {
         String inputLine;
         while ((inputLine = in.readLine()) != null && continueRunning.get()) {
             final String[] split = inputLine.split("\\|");
-            final String type = split.length > 2 ? split[1] : DEFAULT_KEY;
+            final String type = split[1];
             final EventFactory eventFactory = eventTypes.get(type);
             final Event event = eventFactory.create(split, inputLine);
-            readyToProcessEvents.offer(event);
+            readyToProcessEvents.add(event);
         }
     }
 }

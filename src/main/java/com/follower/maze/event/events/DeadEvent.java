@@ -9,14 +9,14 @@ public class DeadEvent extends Event {
     private DeadEvent() {
     }
 
-    private static DeadEvent deadEvent = new DeadEvent();
+    private static final DeadEvent DEAD_EVENT = new DeadEvent();
 
     public static DeadEvent deadEvent() {
-        return deadEvent;
+        return DEAD_EVENT;
     }
 
     @Override
-    public Integer getSequenceNumber() {
+    public int getSequenceNumber() {
         return 0;
     }
 

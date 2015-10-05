@@ -52,16 +52,6 @@ public class IncomingEventProcessorTest {
         verify(eventFactoryMock).create(strings, "666|F|60|50");
     }
 
-    @Test
-    public void testProcessInvalidData() throws Exception {
-        final String input = "random String\r\n";
-        createIncomingMessageFrom(input);
-
-        incomingEventProcessor.process(socketMock);
-
-        assertEquals(readyToProcessEvents.poll(), eventMock);
-    }
-
     private void createIncomingMessageFrom(String input) throws IOException {
         when(eventTypes.get(anyString())).thenReturn(eventFactoryMock);
         when(eventFactoryMock.create(any(String[].class), anyString())).thenReturn(eventMock);

@@ -16,7 +16,7 @@ public class Broadcast extends Event {
     }
 
     @Override
-    public Integer getSequenceNumber() {
+    public int getSequenceNumber() {
         return sequenceNumber;
     }
 

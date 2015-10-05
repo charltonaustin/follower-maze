@@ -20,7 +20,7 @@ public class PrivateMessage extends Event {
     }
 
     @Override
-    public Integer getSequenceNumber() {
+    public int getSequenceNumber() {
         return sequenceNumber;
     }
 

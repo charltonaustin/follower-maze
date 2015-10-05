@@ -4,22 +4,21 @@ import com.follower.maze.MyServer;
 import com.follower.maze.event.events.Event;
 
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DispatchEventProcessor extends MyServer {
 
     private final AtomicBoolean continueRunning;
-    private final PriorityBlockingQueue<Event> readyToProcessEvents;
-    private final BlockingQueue<Event> dispatchEvents;
+    private final Queue<Event> readyToProcessEvents;
+    private final Queue<Event> dispatchEvents;
     private int currentSequenceNumber = 1;
 
 
     public DispatchEventProcessor(
             AtomicBoolean continueRunning,
-            PriorityBlockingQueue<Event> readyToProcessEvents,
-            BlockingQueue<Event> dispatchEvents) {
+            Queue<Event> readyToProcessEvents,
+            Queue<Event> dispatchEvents) {
 
         this.continueRunning = continueRunning;
         this.readyToProcessEvents = readyToProcessEvents;
@@ -31,12 +30,9 @@ public class DispatchEventProcessor extends MyServer {
         while (continueRunning.get()) {
             final Event peek = readyToProcessEvents.peek();
             if (peek != null && peek.getSequenceNumber() <= currentSequenceNumber) {
-                try {
-                    final Event take = readyToProcessEvents.poll();
-                    dispatchEvents.put(take);
+                final Event take = readyToProcessEvents.poll();
+                if (dispatchEvents.add(take)) {
                     currentSequenceNumber++;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         }
