@@ -1,7 +1,7 @@
 package com.follower.maze.users.processor;
 
 import com.follower.maze.event.events.Event;
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 import org.junit.Test;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -16,9 +16,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class UserResponseClientProcessorTest {
+public class NewUserResponseClientProcessorTest {
 
-    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>(1);
+    private final ConcurrentHashMap<Integer, NewUser> users = new ConcurrentHashMap<>(1);
     private final ArrayBlockingQueue<Event> dispatchedEvents = new ArrayBlockingQueue<>(100);
     private final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private final UserResponseClientProcessor userResponseClientProcessor = new UserResponseClientProcessor(continueRunning, users, dispatchedEvents);

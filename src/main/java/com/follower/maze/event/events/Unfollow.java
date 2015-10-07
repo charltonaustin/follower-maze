@@ -1,6 +1,6 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -26,11 +26,11 @@ public class Unfollow extends Event {
     }
 
     @Override
-    public void notifyUsers(Map<Integer, User> users) throws IOException {
-        final User fromUser = users.get(fromUserId);
-        final User toUser = users.get(toUserId);
-        if (toUser != null) {
-            toUser.removeFollower(fromUser);
+    public void notifyUsers(Map<Integer, NewUser> users) throws IOException {
+        final NewUser fromNewUser = users.get(fromUserId);
+        final NewUser toNewUser = users.get(toUserId);
+        if (toNewUser != null) {
+            toNewUser.removeFollower(fromNewUser);
         }
     }
 

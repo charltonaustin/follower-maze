@@ -2,7 +2,7 @@ package com.follower.maze.users.processor;
 
 import com.follower.maze.MyServer;
 import com.follower.maze.event.events.Event;
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -10,11 +10,11 @@ import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UserResponseClientProcessor extends MyServer {
-    private final Map<Integer, User> users;
+    private final Map<Integer, NewUser> users;
     private final AtomicBoolean continueRunning;
     private final Queue<Event> dispatchedEvents;
 
-    public UserResponseClientProcessor(AtomicBoolean continueRunning, Map<Integer, User> users, Queue<Event> dispatchedEvents) {
+    public UserResponseClientProcessor(AtomicBoolean continueRunning, Map<Integer, NewUser> users, Queue<Event> dispatchedEvents) {
         this.users = users;
         this.continueRunning = continueRunning;
         this.dispatchedEvents = dispatchedEvents;
@@ -36,8 +36,8 @@ public class UserResponseClientProcessor extends MyServer {
 
     @Override
     public void shutDown() throws IOException {
-        for (User user : users.values()) {
-            user.shutDown();
+        for (NewUser newUser : users.values()) {
+            newUser.shutDown();
         }
     }
 }

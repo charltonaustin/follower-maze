@@ -4,28 +4,28 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.Set;
 
-public class User implements Comparable<User> {
+public class NewUser implements Comparable<NewUser> {
 
     private final Integer userNumber;
     private final BufferedWriter bufferedWriter;
-    private final Set<User> followers;
+    private final Set<NewUser> followers;
 
-    public User(Integer userNumber, BufferedWriter bufferedWriter, Set<User> followers) {
+    public NewUser(Integer userNumber, BufferedWriter bufferedWriter, Set<NewUser> followers) {
         this.userNumber = userNumber;
         this.bufferedWriter = bufferedWriter;
         this.followers = followers;
     }
 
-    public void addFollower(User user) {
-        followers.add(user);
+    public void addFollower(NewUser newUser) {
+        followers.add(newUser);
     }
 
-    public void removeFollower(User user) {
-        followers.remove(user);
+    public void removeFollower(NewUser newUser) {
+        followers.remove(newUser);
     }
 
     public void notifyFollowers(String event) throws IOException {
-        for (User follower : followers) {
+        for (NewUser follower : followers) {
             follower.receiveEvent(event);
         }
     }
@@ -35,9 +35,9 @@ public class User implements Comparable<User> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        NewUser newUser = (NewUser) o;
 
-        if (userNumber != null ? !userNumber.equals(user.userNumber) : user.userNumber != null) return false;
+        if (userNumber != null ? !userNumber.equals(newUser.userNumber) : newUser.userNumber != null) return false;
 
         return true;
     }
@@ -60,7 +60,7 @@ public class User implements Comparable<User> {
     }
 
     @Override
-    public int compareTo(User o) {
+    public int compareTo(NewUser o) {
         return userNumber.compareTo(o.userNumber);
     }
 }

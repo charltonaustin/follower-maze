@@ -1,6 +1,6 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -23,10 +23,10 @@ public class StatusUpdate extends Event {
     }
 
     @Override
-    public void notifyUsers(Map<Integer, User> users) throws IOException {
-        final User user = users.get(fromUserId);
-        if (user != null) {
-            user.notifyFollowers(event);
+    public void notifyUsers(Map<Integer, NewUser> users) throws IOException {
+        final NewUser newUser = users.get(fromUserId);
+        if (newUser != null) {
+            newUser.notifyFollowers(event);
         }
     }
 

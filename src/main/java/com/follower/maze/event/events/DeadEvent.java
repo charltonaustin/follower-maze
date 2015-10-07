@@ -1,6 +1,6 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class DeadEvent extends Event {
     }
 
     @Override
-    public void notifyUsers(Map<Integer, User> users) {
+    public void notifyUsers(Map<Integer, NewUser> users) {
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,10 +25,10 @@ public class PrivateMessage extends Event {
     }
 
     @Override
-    public void notifyUsers(Map<Integer, User> users) throws IOException {
-        final User toUser = users.get(toUserId);
-        if (toUser != null) {
-            toUser.receiveEvent(event);
+    public void notifyUsers(Map<Integer, NewUser> users) throws IOException {
+        final NewUser toNewUser = users.get(toUserId);
+        if (toNewUser != null) {
+            toNewUser.receiveEvent(event);
         }
     }
 

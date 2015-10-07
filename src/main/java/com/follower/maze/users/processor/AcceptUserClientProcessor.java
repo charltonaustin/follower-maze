@@ -1,7 +1,7 @@
 package com.follower.maze.users.processor;
 
 import com.follower.maze.ClientProcessor;
-import com.follower.maze.users.User;
+import com.follower.maze.users.NewUser;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,11 +15,11 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AcceptUserClientProcessor implements ClientProcessor {
-    private final ConcurrentHashMap<Integer, User> users;
+    private final ConcurrentHashMap<Integer, NewUser> users;
     private final AtomicBoolean continueRunning;
     private final PrintStream printStream;
 
-    public AcceptUserClientProcessor(AtomicBoolean continueRunning, ConcurrentHashMap<Integer, User> users, PrintStream printStream) {
+    public AcceptUserClientProcessor(AtomicBoolean continueRunning, ConcurrentHashMap<Integer, NewUser> users, PrintStream printStream) {
         this.users = users;
         this.continueRunning = continueRunning;
         this.printStream = printStream;
@@ -32,7 +32,7 @@ public class AcceptUserClientProcessor implements ClientProcessor {
         while ((inputLine = in.readLine()) != null && continueRunning.get()) {
             try {
                 final int userId = Integer.parseInt(inputLine.replace("\\r\\n", ""));
-                users.putIfAbsent(userId, new User(userId, bufferedWriter, new ConcurrentSkipListSet<User>()));
+                users.putIfAbsent(userId, new NewUser(userId, bufferedWriter, new ConcurrentSkipListSet<NewUser>()));
             } catch (NumberFormatException e) {
                 printStream.println("Could not parse input: " + inputLine);
                 printStream.println("Threw NumberFormatException e: " + e);
