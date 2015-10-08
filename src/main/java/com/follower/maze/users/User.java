@@ -39,7 +39,11 @@ public class User implements Comparable<User> {
 
     public void notifyFollowers(String event) throws IOException {
         for (User follower : followers) {
-            follower.receiveEvent(event);
+            final boolean hadError = follower.receiveEvent(event);
+            if (hadError) {
+                Logger.log(this, "had error sending event to " + follower.getUserNumber() + " removing from followers");
+                followers.remove(follower);
+            }
         }
     }
 
@@ -70,10 +74,10 @@ public class User implements Comparable<User> {
         }
     }
 
-
-    public void setUser(User user) {
-        // do nothing
+    public Integer getUserNumber() {
+        return userNumber;
     }
+
 
     @Override
     public int hashCode() {

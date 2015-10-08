@@ -25,7 +25,11 @@ public class Broadcast extends Event {
     public void notifyUsers(Map<Integer, User> users) throws IOException {
         for (User user : users.values()) {
             Logger.log(this, "sending " + event);
-            user.receiveEvent(event);
+            final boolean hadError = user.receiveEvent(event);
+            if (hadError) {
+                Logger.log(this, "had error sending event to " + user.getUserNumber() + " removing from users");
+                users.remove(user.getUserNumber());
+            }
         }
     }
 

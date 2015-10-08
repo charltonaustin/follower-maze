@@ -36,7 +36,10 @@ public class PrivateMessage extends Event {
             toNewUser = noUserYet;
         }
         Logger.log(this, "sending " + event + " to " + toNewUser);
-        toNewUser.receiveEvent(event);
+        final boolean hadError = toNewUser.receiveEvent(event);
+        if (hadError) {
+            Logger.log(this, "had error sending to " + toNewUser.getUserNumber());
+        }
     }
 
     @Override

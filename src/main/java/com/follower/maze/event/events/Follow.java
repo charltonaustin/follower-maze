@@ -42,7 +42,10 @@ public class Follow extends Event {
             fromNewUser = noUserYet;
         }
         Logger.log(this, "sending " + event + " to " + toNewUser);
-        toNewUser.receiveEvent(event);
+        final boolean hadError = toNewUser.receiveEvent(event);
+        if (hadError) {
+            Logger.log(this, "had error sending to " + toNewUser.getUserNumber());
+        }
         toNewUser.addFollower(fromNewUser);
     }
 
