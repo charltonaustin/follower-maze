@@ -15,14 +15,10 @@ public class StatusUpdate extends Event {
     private final String event;
 
     public StatusUpdate(int sequenceNumber, String event, int fromUserId) {
+        super(sequenceNumber);
         this.sequenceNumber = sequenceNumber;
         this.fromUserId = fromUserId;
         this.event = event;
-    }
-
-    @Override
-    public int getSequenceNumber() {
-        return sequenceNumber;
     }
 
     @Override

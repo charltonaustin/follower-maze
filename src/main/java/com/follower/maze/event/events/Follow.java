@@ -16,15 +16,11 @@ public class Follow extends Event {
     private final String event;
 
     public Follow(int sequenceNumber, String event, int fromUserId, int toUserId) {
+        super(sequenceNumber);
         this.sequenceNumber = sequenceNumber;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.event = event;
-    }
-
-    @Override
-    public int getSequenceNumber() {
-        return sequenceNumber;
     }
 
     @Override

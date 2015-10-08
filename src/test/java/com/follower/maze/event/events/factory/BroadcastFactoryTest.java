@@ -10,10 +10,10 @@ import static junit.framework.Assert.assertEquals;
 public class BroadcastFactoryTest {
 
     private final EventFactory factory = new BroadcastFactory();
-    private static final String TYPE = "F";
+    private static final String TYPE = "B";
 
     @Test
-    public void test() throws Exception {
+    public void testValidEvent() throws Exception {
 
         final String eventString = "666|" + TYPE;
         String[] values = eventString.split("\\|");
@@ -24,7 +24,7 @@ public class BroadcastFactoryTest {
     }
 
     @Test
-    public void testInvalidSequenceEvent() throws Exception {
+    public void testInvalidEvent() throws Exception {
         final String eventString = "adfasd|" + TYPE;
         String[] values = eventString.split("\\|");
 

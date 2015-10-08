@@ -19,12 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class AcceptUserClientProcessor implements ClientProcessor {
     private final Map<Integer, User> users;
     private final AtomicBoolean continueRunning;
-    private final PrintStream printStream;
 
-    public AcceptUserClientProcessor(AtomicBoolean continueRunning, Map<Integer, User> users, PrintStream printStream) {
+    public AcceptUserClientProcessor(AtomicBoolean continueRunning, Map<Integer, User> users) {
         this.users = users;
         this.continueRunning = continueRunning;
-        this.printStream = printStream;
     }
 
     public void process(final Socket clientSocket) throws IOException {
@@ -45,10 +43,10 @@ public class AcceptUserClientProcessor implements ClientProcessor {
                     Logger.log(this, "adding new user " + newUser);
                 }
             } catch (NumberFormatException e) {
-                printStream.println("Could not parse input: " + inputLine);
-                printStream.println("Threw NumberFormatException e: " + e);
+                Logger.log(this, "Could not parse input: " + inputLine);
+                Logger.log(this, "Threw NumberFormatException e: " + e);
             } catch (NullPointerException e) {
-                printStream.println("Parsed null number: " + inputLine);
+                Logger.log(this, "Parsed null number: " + inputLine);
             }
         }
     }

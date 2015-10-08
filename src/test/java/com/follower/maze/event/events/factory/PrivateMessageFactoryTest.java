@@ -8,7 +8,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 public class PrivateMessageFactoryTest {
-    public static final String TYPE = "F";
+    public static final String TYPE = "P";
     private final EventFactory factory = new PrivateMessageFactory();
     private final DeadEvent expectedDeadEvent = DeadEvent.deadEvent();
 

@@ -12,13 +12,9 @@ public class Broadcast extends Event {
     private final String event;
 
     public Broadcast(Integer sequenceNumber, String event) {
+        super(sequenceNumber);
         this.sequenceNumber = sequenceNumber;
         this.event = event;
-    }
-
-    @Override
-    public int getSequenceNumber() {
-        return sequenceNumber;
     }
 
     @Override

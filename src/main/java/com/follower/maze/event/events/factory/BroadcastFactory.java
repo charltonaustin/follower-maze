@@ -6,7 +6,6 @@ import com.follower.maze.event.events.Event;
 
 public class BroadcastFactory implements EventFactory {
 
-
     @Override
     public Event create(String[] values, String event) {
         try {

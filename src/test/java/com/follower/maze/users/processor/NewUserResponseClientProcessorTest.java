@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class NewUserResponseClientProcessorTest {
 
@@ -23,10 +24,10 @@ public class NewUserResponseClientProcessorTest {
     private final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private final UserResponseClientProcessor userResponseClientProcessor = new UserResponseClientProcessor(continueRunning, users, dispatchedEvents);
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private final Event eventMock = mock(Event.class);
 
     @Test
     public void testProcessAUser() throws Exception {
-        final Event eventMock = mock(Event.class);
         dispatchedEvents.add(eventMock);
 
 
@@ -34,6 +35,26 @@ public class NewUserResponseClientProcessorTest {
 
 
         verify(eventMock).notifyUsers(users);
+    }
+
+    @Test
+    public void testContinueRunningStopsLoop() throws Exception {
+        dispatchedEvents.add(eventMock);
+        continueRunning.set(false);
+
+
+        runUserProcessor();
+
+
+        verifyZeroInteractions(eventMock);
+    }
+
+    @Test
+    public void testEmptyDispatchWorks() throws Exception {
+        runUserProcessor();
+
+
+        verifyZeroInteractions(eventMock);
     }
 
     private void runUserProcessor() throws InterruptedException, java.util.concurrent.ExecutionException {

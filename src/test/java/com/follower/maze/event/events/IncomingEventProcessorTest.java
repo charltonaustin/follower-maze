@@ -12,6 +12,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -28,14 +29,23 @@ public class IncomingEventProcessorTest {
     private final Event eventMock = mock(Event.class);
     private final IncomingEventProcessor incomingEventProcessor = new IncomingEventProcessor(continueRunning, readyToProcessEvents, eventTypes);
 
-
     @Test
     public void testProcessCreatesEvent() throws Exception {
         createIncomingMessageFrom("666|F|60|50\r\n");
 
         incomingEventProcessor.process(socketMock);
 
-        assertEquals(readyToProcessEvents.poll(), eventMock);
+        assertEquals(eventMock, readyToProcessEvents.poll());
+    }
+
+    @Test
+    public void testContinueRunningStopsLoop() throws Exception {
+        createIncomingMessageFrom("666|F|60|50\r\n");
+        continueRunning.set(false);
+
+        incomingEventProcessor.process(socketMock);
+
+        assertNull(readyToProcessEvents.poll());
     }
 
     @Test

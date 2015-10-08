@@ -64,7 +64,7 @@ public class Main {
                 continueRunning,
                 Executors.newCachedThreadPool(),
                 userSocketServer,
-                new AcceptUserClientProcessor(continueRunning, users, System.out));
+                new AcceptUserClientProcessor(continueRunning, users));
 
         final UserResponseClientProcessor userResponseClientProcessor =
                 new UserResponseClientProcessor(continueRunning, users, dispatchedEvents);

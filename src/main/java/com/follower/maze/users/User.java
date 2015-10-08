@@ -10,18 +10,16 @@ import java.util.Set;
 
 public class User implements Comparable<User> {
 
-    private Integer userNumber;
+    private final Integer userNumber;
+    private final Set<User> followers;
     private PrintWriter writer;
-    private Set<User> followers;
     private List<String> events = new LinkedList<>();
-
 
     public User(Integer userNumber, PrintWriter writer, Set<User> followers) {
         this.userNumber = userNumber;
         this.writer = writer;
         this.followers = followers;
     }
-
 
     public User(Integer userNumber, List<String> events, Set<User> followers) {
         this.events.addAll(events);
@@ -64,7 +62,6 @@ public class User implements Comparable<User> {
         } else {
             events.add(event);
             return false;
-
         }
     }
 

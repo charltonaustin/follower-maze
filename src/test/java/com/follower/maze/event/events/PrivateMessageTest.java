@@ -5,6 +5,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -12,25 +14,34 @@ public class PrivateMessageTest {
 
     private final User newUserThree = mock(User.class);
     private final User newUserTwo = mock(User.class);
-    private final HashMap<Integer, User> users = new HashMap<Integer, User>() {{
+    private final HashMap<Integer, User> twoUsers = new HashMap<Integer, User>() {{
         put(2, newUserTwo);
         put(3, newUserThree);
     }};
     private final PrivateMessage privateMessage = new PrivateMessage(1, "1|F|2|3", 2, 3);
+    private final HashMap<Integer, User> noUsers = new HashMap<>();
 
     @Test
     public void testNotifyUsers() throws Exception {
 
-        privateMessage.notifyUsers(users);
+        privateMessage.notifyUsers(twoUsers);
 
         verify(newUserThree).receiveEvent("1|F|2|3");
     }
 
     @Test
-    public void testNotifyWhenUserIsNotThere() throws Exception {
+    public void testNotifyWhenUserIsRightSize() throws Exception {
 
-        final HashMap<Integer, User> users = new HashMap<>();
+        privateMessage.notifyUsers(noUsers);
 
-        privateMessage.notifyUsers(users);
+        assertEquals(1, noUsers.size());
+    }
+
+    @Test
+    public void testNotifyWhenUserHasTheCorrectKeys() throws Exception {
+
+        privateMessage.notifyUsers(noUsers);
+
+        assertTrue(noUsers.containsKey(3));
     }
 }

@@ -7,17 +7,13 @@ import java.util.Map;
 public class DeadEvent extends Event {
 
     private DeadEvent() {
+        super(0);
     }
 
     private static final DeadEvent DEAD_EVENT = new DeadEvent();
 
     public static DeadEvent deadEvent() {
         return DEAD_EVENT;
-    }
-
-    @Override
-    public int getSequenceNumber() {
-        return 0;
     }
 
     @Override

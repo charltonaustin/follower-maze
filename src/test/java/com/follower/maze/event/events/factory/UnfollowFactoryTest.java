@@ -13,7 +13,7 @@ public class UnfollowFactoryTest {
     private final DeadEvent expectedDeadEvent = DeadEvent.deadEvent();
 
     @Test
-    public void test() throws Exception {
+    public void testValidEvent() throws Exception {
         final String eventString = "666|" + TYPE + "|60|50";
         String[] values = eventString.split("\\|");
 

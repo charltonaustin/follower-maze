@@ -5,6 +5,7 @@ import com.follower.maze.event.events.Event;
 import com.follower.maze.event.events.Unfollow;
 
 public class UnfollowFactory implements EventFactory {
+
     @Override
     public Event create(String[] values, String event) {
         try {
