@@ -27,6 +27,7 @@ public class Server extends MyServer {
             final Socket userSocket;
             try {
                 userSocket = socket.accept();
+                Logger.log(this, "submitting listening for " + clientProcessor);
                 userThreadPool.submit(new Runnable() {
                     @Override
                     public void run() {
@@ -41,9 +42,10 @@ public class Server extends MyServer {
 
                 });
             } catch (IOException e) {
-                e.printStackTrace();
+               Logger.log(this, "Accept timed out " + clientProcessor);
             }
         }
+        Logger.log(this, "Leaving from " + clientProcessor);
     }
 
     public void shutDown() throws IOException {

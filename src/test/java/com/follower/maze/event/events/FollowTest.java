@@ -1,6 +1,6 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.NewUser;
+import com.follower.maze.users.User;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verify;
 
 public class FollowTest {
 
-    private final NewUser newUserThree = mock(NewUser.class);
-    private final NewUser newUserTwo = mock(NewUser.class);
-    private final HashMap<Integer, NewUser> users = new HashMap<Integer, NewUser>() {{
+    private final User newUserThree = mock(User.class);
+    private final User newUserTwo = mock(User.class);
+    private final HashMap<Integer, User> users = new HashMap<Integer, User>() {{
         put(2, newUserTwo);
         put(3, newUserThree);
     }};
@@ -37,7 +37,7 @@ public class FollowTest {
     @Test
     public void testNotifyWhenUserIsNotThere() throws Exception {
 
-        final HashMap<Integer, NewUser> users = new HashMap<>();
+        final HashMap<Integer, User> users = new HashMap<>();
 
         follow.notifyUsers(users);
     }

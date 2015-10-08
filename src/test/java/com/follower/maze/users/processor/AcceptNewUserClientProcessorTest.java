@@ -1,11 +1,12 @@
 package com.follower.maze.users.processor;
 
-import com.follower.maze.users.NewUser;
+import com.follower.maze.users.User;
 import org.apache.commons.io.IOUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,11 +20,11 @@ import static org.mockito.Mockito.when;
 
 public class AcceptNewUserClientProcessorTest {
 
-    private final ConcurrentHashMap<Integer, NewUser> users = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
     private final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private final Socket socketMock = mock(Socket.class);
-    private final Set<NewUser> followers = new ConcurrentSkipListSet<>();
-    private final NewUser newUser = new NewUser(2932, null, followers);
+    private final Set<User> followers = new ConcurrentSkipListSet<>();
+    private final User newUser = new User(2932, (PrintWriter) null, followers);
     private final PrintStream printStreamMock = mock(PrintStream.class);
     private final AcceptUserClientProcessor acceptUserProcessor = new AcceptUserClientProcessor(continueRunning, users, printStreamMock);
 

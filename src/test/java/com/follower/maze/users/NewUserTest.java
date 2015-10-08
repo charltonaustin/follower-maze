@@ -2,8 +2,8 @@ package com.follower.maze.users;
 
 import org.junit.Test;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
@@ -14,16 +14,16 @@ import static org.mockito.Mockito.verify;
 
 public class NewUserTest {
 
-    private final Set<NewUser> followers = new ConcurrentSkipListSet<>();
-    final BufferedWriter bufferedWriterMock = mock(BufferedWriter.class);
-    final NewUser newUser = new NewUser(1, bufferedWriterMock, followers);
-    final NewUser follower = new NewUser(2, bufferedWriterMock, null);
+    private final Set<User> followers = new ConcurrentSkipListSet<>();
+    final PrintWriter bufferedWriterMock = mock(PrintWriter.class);
+    final User user = new User(1, bufferedWriterMock, followers);
+    final User follower = new User(2, bufferedWriterMock, null);
 
     @Test
     public void testReceiveEvent() throws IOException {
         final String event = "some event";
 
-        newUser.receiveEvent(event);
+        user.receiveEvent(event);
 
         verify(bufferedWriterMock).write(event);
         verify(bufferedWriterMock).flush();
@@ -31,15 +31,15 @@ public class NewUserTest {
 
     @Test
     public void testAddFollower() throws IOException {
-        newUser.addFollower(follower);
+        user.addFollower(follower);
 
         assertTrue(followers.contains(follower));
     }
 
     @Test
     public void testRemoveFollower() throws IOException {
-        newUser.addFollower(follower);
-        newUser.removeFollower(follower);
+        user.addFollower(follower);
+        user.removeFollower(follower);
 
         assertFalse(followers.contains(follower));
     }
@@ -49,7 +49,7 @@ public class NewUserTest {
         final String event = "some event";
         followers.add(follower);
 
-        newUser.notifyFollowers(event);
+        user.notifyFollowers(event);
 
         verify(bufferedWriterMock).write(event);
         verify(bufferedWriterMock).flush();

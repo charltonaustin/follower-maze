@@ -1,9 +1,12 @@
 package com.follower.maze.event.events;
 
-import com.follower.maze.users.NewUser;
+import com.follower.maze.Logger;
+import com.follower.maze.users.User;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 public class Follow extends Event {
 
@@ -25,13 +28,22 @@ public class Follow extends Event {
     }
 
     @Override
-    public void notifyUsers(Map<Integer, NewUser> users) throws IOException {
-        final NewUser toNewUser = users.get(toUserId);
-        final NewUser fromNewUser = users.get(fromUserId);
-        if (toNewUser != null) {
-            toNewUser.receiveEvent(event);
-            toNewUser.addFollower(fromNewUser);
+    public void notifyUsers(Map<Integer, User> users) throws IOException {
+        User toNewUser = users.get(toUserId);
+        if (toNewUser == null) {
+            final User noUserYet = new User(toUserId, new LinkedList<String>(), new ConcurrentSkipListSet<User>());
+            users.put(toUserId, noUserYet);
+            toNewUser = noUserYet;
         }
+        User fromNewUser = users.get(fromUserId);
+        if (fromNewUser == null) {
+            final User noUserYet = new User(fromUserId, new LinkedList<String>(), new ConcurrentSkipListSet<User>());
+            users.put(fromUserId, noUserYet);
+            fromNewUser = noUserYet;
+        }
+        Logger.log(this, "sending " + event + " to " + toNewUser);
+        toNewUser.receiveEvent(event);
+        toNewUser.addFollower(fromNewUser);
     }
 
     @Override
