@@ -4,9 +4,7 @@ import com.follower.maze.Logger;
 import com.follower.maze.users.User;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public class PrivateMessage extends Event {
 
@@ -26,14 +24,10 @@ public class PrivateMessage extends Event {
     @Override
     public void notifyUsers(Map<Integer, User> users) throws IOException {
         User toNewUser = users.get(toUserId);
-        if (toNewUser == null) {
-            final User noUserYet = new User(toUserId, new LinkedList<String>(), new ConcurrentSkipListSet<User>());
-            users.put(toUserId, noUserYet);
-            toNewUser = noUserYet;
-        }
+
         Logger.log(this, "sending " + event + " to " + toNewUser);
-        final boolean hadError = toNewUser.receiveEvent(event);
-        if (hadError) {
+
+        if (toNewUser.receiveEvent(event)) {
             Logger.log(this, "had error sending to " + toNewUser.getUserNumber());
         }
     }

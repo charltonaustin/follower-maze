@@ -1,6 +1,5 @@
 package com.follower.maze.event.processor;
 
-import com.follower.maze.event.events.DeadEvent;
 import com.follower.maze.event.events.Event;
 import org.junit.Test;
 

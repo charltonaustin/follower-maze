@@ -1,9 +1,11 @@
 package com.follower.maze.event.events;
 
+import com.follower.maze.users.DefaultUserHashMap;
 import com.follower.maze.users.User;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -13,9 +15,9 @@ import static org.mockito.Mockito.verify;
 public class StatusUpdateTest {
 
     private final User newUserTwo = mock(User.class);
-    private final HashMap<Integer, User> oneUser = new HashMap<Integer, User>() {{
+    private final Map<Integer, User> oneUser = new DefaultUserHashMap(new HashMap<Integer, User>() {{
         put(2, newUserTwo);
-    }};
+    }});
     private final StatusUpdate statusUpdate = new StatusUpdate(1, "1|S|2", 2);
     private final HashMap<Integer, User> users = new HashMap<>();
 

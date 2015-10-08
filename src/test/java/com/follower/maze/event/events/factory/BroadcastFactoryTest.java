@@ -9,8 +9,8 @@ import static junit.framework.Assert.assertEquals;
 
 public class BroadcastFactoryTest {
 
-    private final EventFactory factory = new BroadcastFactory();
     private static final String TYPE = "B";
+    private final EventFactory factory = new BroadcastFactory();
 
     @Test
     public void testValidEvent() throws Exception {

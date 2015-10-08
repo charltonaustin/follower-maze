@@ -42,7 +42,7 @@ public class Server extends MyServer {
 
                 });
             } catch (IOException e) {
-               Logger.log(this, "Accept timed out " + clientProcessor);
+                Logger.log(this, "Accept timed out " + clientProcessor);
             }
         }
         Logger.log(this, "Leaving from " + clientProcessor);

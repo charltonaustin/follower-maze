@@ -9,6 +9,7 @@ import com.follower.maze.event.events.factory.StatusUpdateFactory;
 import com.follower.maze.event.events.factory.UnfollowFactory;
 import com.follower.maze.event.processor.DispatchEventProcessor;
 import com.follower.maze.event.processor.IncomingEventProcessor;
+import com.follower.maze.users.DefaultUserHashMap;
 import com.follower.maze.users.User;
 import com.follower.maze.users.processor.AcceptUserClientProcessor;
 import com.follower.maze.users.processor.UserResponseClientProcessor;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -26,7 +28,7 @@ public class Main {
 
     private static final AtomicBoolean continueRunning = new AtomicBoolean(true);
     private static final Thread mainThread = Thread.currentThread();
-    private static final ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>(100);
+    private static final Map<Integer, User> users = new DefaultUserHashMap(new ConcurrentHashMap<Integer, User>(100));
     private static final Thread shutdownHook = new Thread() {
         public void run() {
             continueRunning.set(false);

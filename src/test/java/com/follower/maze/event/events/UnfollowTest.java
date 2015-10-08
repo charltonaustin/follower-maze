@@ -1,10 +1,12 @@
 package com.follower.maze.event.events;
 
+import com.follower.maze.users.DefaultUserHashMap;
 import com.follower.maze.users.User;
 import org.junit.Test;
 import org.mockito.internal.verification.Times;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -16,10 +18,10 @@ public class UnfollowTest {
 
     private final User newUserThree = mock(User.class);
     private final User newUserTwo = mock(User.class);
-    private final HashMap<Integer, User> twoUsers = new HashMap<Integer, User>() {{
+    private final Map<Integer, User> twoUsers = new DefaultUserHashMap(new HashMap<Integer, User>() {{
         put(2, newUserTwo);
         put(3, newUserThree);
-    }};
+    }});
     private final Unfollow unfollow = new Unfollow(1, "1|F|2|3", 2, 3);
     private final HashMap<Integer, User> noUsers = new HashMap<>();
 
