@@ -20,3 +20,6 @@ The basic flow for an event goes like this. An event gets read by the IncomingEv
 does basic parsing before passing off the event to an EventFactory this does further parsing depending on the type of
 event. The EventFactory then produces a new Event. That Event is then passed off to DispatchEventProcessor which orders
 the Event before passing it off to the UserResponseClientProcessor which then dispatches the event to the users.
+
+
+In my tests it took approximately 6 mins when writing to a file and 8 mins when writing to stdout on a console.
