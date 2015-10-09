@@ -18,8 +18,8 @@ There are two main domain object types. The event and the user.
 
 I used different processors so that as much as possible users and events can be processed in parallel.
 
-The basic flow for a user goes like this. A user connects and registered via the AcceptUserClientProcessor which
-creates a new User object.
+The basic flow for a user goes like this. A user connects via the AcceptUserClientProcessor which
+then creates a new User object.
 
 The basic flow for an event goes like this. An event gets read by the IncomingEventProcessor. The IncomingEventProcessor
 does basic parsing before passing off the event to an EventFactory this does further parsing depending on the type of
